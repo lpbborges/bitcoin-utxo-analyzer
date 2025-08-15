@@ -53,6 +53,7 @@
 		"bitcoinjs-lib": "^6.1.7",
 		"buffer": "^6.0.3",
 		"ecpair": "^3.0.0",
+		"lucide-svelte": "^0.539.0",
 		"tiny-secp256k1": "^2.2.4"
 	}
 }
