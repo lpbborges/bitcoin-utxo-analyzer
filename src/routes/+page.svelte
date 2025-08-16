@@ -1,53 +1,53 @@
 <script lang="ts">
-	import { LoaderCircle } from 'lucide-svelte';
+	import { LoaderCircle } from 'lucide-svelte'
 
-	import { getWalletUtxos } from '$lib/bitcoin';
-	import DustPill from '$lib/components/DustPill.svelte';
+	import { getWalletUtxos } from '$lib/bitcoin'
+	import DustPill from '$lib/components/DustPill.svelte'
 
-	import type { AnalyzedUtxo } from '$lib/types';
+	import type { AnalyzedUtxo } from '$lib/types'
 
-	let xpub = '';
-	let errorMessage = '';
-	let isLoading = false;
-	let utxos: AnalyzedUtxo[] = [];
-	let totalBalance = 0;
+	let xpub = ''
+	let errorMessage = ''
+	let isLoading = false
+	let utxos: AnalyzedUtxo[] = []
+	let totalBalance = 0
 
 	function clean() {
-		errorMessage = '';
-		isLoading = false;
-		utxos = [];
-		totalBalance = 0;
+		errorMessage = ''
+		isLoading = false
+		utxos = []
+		totalBalance = 0
 	}
 
 	async function handleClick() {
 		if (!xpub) {
-			errorMessage = 'Please enter a xpub.';
-			return;
+			errorMessage = 'Please enter a xpub.'
+			return
 		}
 
 		if (!xpub.startsWith('xpub')) {
-			errorMessage = 'Not a valid xpub.';
-			return;
+			errorMessage = 'Not a valid xpub.'
+			return
 		}
 
-		clean();
+		clean()
 
 		try {
-			isLoading = true;
-			const foundUtxos = await getWalletUtxos(xpub);
+			isLoading = true
+			const foundUtxos = await getWalletUtxos(xpub)
 
 			if (foundUtxos.length === 0) {
-				throw new Error('0 Utxo found for this wallet.');
+				throw new Error('0 Utxo found for this wallet.')
 			}
 
-			utxos = foundUtxos;
-			totalBalance = utxos.reduce((sum, utxo) => sum + utxo.value, 0);
+			utxos = foundUtxos
+			totalBalance = utxos.reduce((sum, utxo) => sum + utxo.value, 0)
 		} catch (err: unknown) {
 			if (err instanceof Error) {
-				errorMessage = err.message;
+				errorMessage = err.message
 			}
 		} finally {
-			isLoading = false;
+			isLoading = false
 		}
 	}
 </script>
