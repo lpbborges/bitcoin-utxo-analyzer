@@ -2,12 +2,14 @@
 	import { LoaderCircle } from 'lucide-svelte';
 
 	import { getWalletUtxos } from '$lib/bitcoin';
-	import type { UtxoWithAddress } from '$lib/mempool-api';
+	import DustPill from '$lib/components/DustPill.svelte';
+
+	import type { AnalyzedUtxo } from '$lib/types';
 
 	let xpub = '';
 	let errorMessage = '';
 	let isLoading = false;
-	let utxos: UtxoWithAddress[] = [];
+	let utxos: AnalyzedUtxo[] = [];
 	let totalBalance = 0;
 
 	function clean() {
@@ -106,6 +108,7 @@
 								<th class="p-2">Value (sats)</th>
 								<th class="p-2">Address</th>
 								<th class="p-2">TXID</th>
+								<th class="p-2">Status</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -115,6 +118,11 @@
 									<td class="max-w-xs truncate p-2">{utxo.address}</td>
 									<td class="max-w-xs truncate p-2" title={utxo.txid}>
 										{utxo.txid.slice(0, 10)}...{utxo.txid.slice(-10)}
+									</td>
+									<td class="max-w-xs truncate p-2">
+										{#if !utxo.isDust}
+											<DustPill />
+										{/if}
 									</td>
 								</tr>
 							{/each}

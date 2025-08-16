@@ -1,5 +1,5 @@
 import { Buffer } from 'buffer';
 if (typeof window !== 'undefined') {
-	// @ts-ignore
+	// @ts-expect-error Assigning buffer
 	window.Buffer = Buffer;
 }
