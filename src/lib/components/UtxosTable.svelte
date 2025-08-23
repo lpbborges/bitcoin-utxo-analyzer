@@ -23,7 +23,7 @@
 					{utxo.txid.slice(0, 10)}...{utxo.txid.slice(-10)}
 				</td>
 				<td class="max-w-xs truncate p-2">
-					{#if !utxo.isDust}
+					{#if utxo.isDust}
 						<DustPill />
 					{/if}
 				</td>
